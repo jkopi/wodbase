@@ -12,7 +12,7 @@ model Gym {
   name        String @unique
   description String
   address     String
-  owner       String @unique
+  owner       String
 
   createdAt DateTime @default(now())
 }

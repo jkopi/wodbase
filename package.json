@@ -9,7 +9,7 @@
     "start": "pnpm run start:client & pnpm run start:api",
     "build": "pnpm recursive run build",
     "test": "pnpm recursive run test",
-    "docker": "docker compose up -d"
+    "docker": "docker compose up --build --renew-anon-volumes -d"
   },
   "keywords": [],
   "author": "",
