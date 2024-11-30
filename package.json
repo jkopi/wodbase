@@ -8,7 +8,8 @@
     "start:api": "pnpm --filter wodbase-api start:dev",
     "start": "pnpm run start:client & pnpm run start:api",
     "build": "pnpm recursive run build",
-    "test": "pnpm recursive run test"
+    "test": "pnpm recursive run test",
+    "docker": "docker compose up -d"
   },
   "keywords": [],
   "author": "",
