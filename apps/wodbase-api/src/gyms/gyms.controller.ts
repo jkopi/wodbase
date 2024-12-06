@@ -19,27 +19,32 @@ export class GymsController {
 
   @Post()
   @ApiCreatedResponse({ type: GymEntity })
-  create(@Body() createGymDto: CreateGymDto) {
-    return this.gymsService.create(createGymDto);
+  async create(@Body() createGymDto: CreateGymDto) {
+    return await this.gymsService.create(createGymDto);
   }
 
   @Get()
-  findAll() {
-    return this.gymsService.findAll();
+  async findAll() {
+    return await this.gymsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.gymsService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.gymsService.findOne(id);
+  }
+
+  @Get(':id/feed')
+  async findGymFeed(@Param('id') id: string) {
+    return await this.gymsService.findGymFeedData(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateGymDto: UpdateGymDto) {
-    return this.gymsService.update(+id, updateGymDto);
+  async update(@Param('id') id: string, @Body() updateGymDto: UpdateGymDto) {
+    return await this.gymsService.update(id, updateGymDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.gymsService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.gymsService.remove(id);
   }
 }

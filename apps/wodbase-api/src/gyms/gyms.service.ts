@@ -7,25 +7,43 @@ import { PrismaService } from '../prisma/prisma.service';
 export class GymsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createGymDto: CreateGymDto) {
-    return this.prisma.gym.create({
+  async create(createGymDto: CreateGymDto) {
+    return await this.prisma.gym.create({
       data: createGymDto,
     });
   }
 
-  findAll() {
-    return this.prisma.gym.findMany();
+  async findAll() {
+    return await this.prisma.gym.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} gym`;
+  async findOne(id: string) {
+    return await this.prisma.gym.findFirst({ where: { id } });
   }
 
-  update(id: number, updateGymDto: UpdateGymDto) {
+  async findGymFeedData(id: string) {
+    const res = await this.prisma.gym.findFirst({
+      where: { id },
+      include: { infos: true, workouts: true },
+    });
+
+    return res;
+  }
+
+  async findOneWithGymInfos(id: string) {
+    const res = await this.prisma.gym.findFirst({
+      where: { id },
+      include: { infos: true },
+    });
+
+    return res;
+  }
+
+  async update(id: string, updateGymDto: UpdateGymDto) {
     return `This action updates a #${id} gym`;
   }
 
-  remove(id: number) {
+  async remove(id: string) {
     return `This action removes a #${id} gym`;
   }
 }

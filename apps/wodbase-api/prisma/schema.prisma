@@ -8,11 +8,50 @@ datasource db {
 }
 
 model Gym {
-  id          String @id @default(uuid())
-  name        String @unique
+  id          String   @id @default(uuid())
+  name        String   @unique
   description String
   address     String
-  owner       String
+  owner       String // TBD: email or username
+  createdAt   DateTime @default(now())
 
+  infos   GymInfo[] // Info for gym feed. May contain 3 types of info, Weekly, General, Contact and Important
+  workouts Workout[] // Gym can have many workouts. TODO: Should old workouts be archived?
+}
+
+model GymInfo {
+  id        String   @id @default(uuid())
+  type      InfoType // Type of information (enum)
+  content   String // Actual content (Markdown-friendly)
   createdAt DateTime @default(now())
+
+  gymId String
+  gym   Gym    @relation(fields: [gymId], references: [id], onDelete: Cascade)
+}
+
+model Workout {
+  id          String      @id @default(uuid())
+  name        String
+  description String
+  type        WorkoutType
+  order       Int
+  scheduledTo DateTime
+  createdAt   DateTime    @default(now())
+
+  gymId String
+  gym   Gym    @relation(fields: [gymId], references: [id], onDelete: Cascade)
+}
+
+enum InfoType {
+  IMPORTANT_INFO
+  GENERAL_INFO
+  WEEKLY_INFO
+  CONTACT_INFO
+}
+
+enum WorkoutType {
+  WARMUP
+  METCON
+  STRENGTH
+  WORKOUT
 }
